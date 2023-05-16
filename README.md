@@ -1,4 +1,4 @@
-<span style="color: #965F36;">HowlTuner</span>
+<span style="color: rgb(150, 95, 54); font-weight: bold;">HowlTuner</span>
 
 
 HowlTuner is a Python program that helps you find and display guitar string tunings. Whether you're looking for standard tunings, open tunings, or drop tunings, HowlTuner has got you covered. With a simple and intuitive interface, you can easily input the name of a tuning and get the corresponding string tuning displayed.
