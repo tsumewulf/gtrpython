@@ -38,11 +38,14 @@ tunings = {
 
 def get_string_tuning(tuning_name):
     normalized_tuning_name = tuning_name.lower().replace(' ', '')
-    for name, notes in tunings.items():
+    matching_tunings = []
+
+    for name in tunings.keys():
         normalized_name = name.lower().replace(' ', '')
-        if normalized_tuning_name == normalized_name:
-            return name, notes
-    return None, None
+        if normalized_tuning_name in normalized_name:
+            matching_tunings.append(name)
+
+    return matching_tunings
 
 while True:
     tuning_name = input("Enter the name of the tuning (or 'exit' to quit): ")
@@ -50,12 +53,29 @@ while True:
         print("Thank you for using my Python tuner!")
         break
 
-    found_tuning_name, tuning_notes = get_string_tuning(tuning_name)
+    matching_tunings = get_string_tuning(tuning_name)
 
-    if found_tuning_name and tuning_notes:
-        print(f"The string tuning for {found_tuning_name} is:")
-        print(", ".join([note.upper() for note in tuning_notes]))
-    elif found_tuning_name:
-        print(f"Did you mean {found_tuning_name}?")
+    if matching_tunings:
+        if len(matching_tunings) == 1:
+            found_tuning_name = matching_tunings[0]
+            tuning_notes = tunings[found_tuning_name]
+            print(f"The string tuning for {found_tuning_name} is:")
+            print(", ".join([note.upper() for note in tuning_notes]))
+        else:
+            print("Multiple matching tunings found. Please select one from the list:")
+            for i, tuning in enumerate(matching_tunings, start=1):
+                print(f"{i}. {tuning}")
+            choice = input("Enter the number corresponding to your choice: ")
+            try:
+                choice = int(choice)
+                if choice >= 1 and choice <= len(matching_tunings):
+                    found_tuning_name = matching_tunings[choice - 1]
+                    tuning_notes = tunings[found_tuning_name]
+                    print(f"The string tuning for {found_tuning_name} is:")
+                    print(", ".join([note.upper() for note in tuning_notes]))
+                else:
+                    print("Invalid choice. Please try again.")
+            except ValueError:
+                print("Invalid choice. Please enter a number.")
     else:
         print("Tuning not found.")
